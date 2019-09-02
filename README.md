@@ -1,0 +1,1 @@
+# etranslate-chrome-extension
