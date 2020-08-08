@@ -1,30 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Etranslate</title>
+        <link href="https://fonts.googleapis.com/css2?family=Philosopher&display=swap" rel="stylesheet">
         <style>
+            .text-effect {
+                position: relative;
+                overflow: hidden;
+                display: block;
+                line-height: 1.2;
+            }
+
+            .text-effect::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                background: white;
+                animation: a-ltr-after 2s cubic-bezier(.77, 0, .18, 1) forwards;
+                transform: translateX(-101%);
+            }
+
+            .text-effect::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                background: var(--bg-color);
+                animation: a-ltr-before 2s cubic-bezier(.77, 0, .18, 1) forwards;
+                transform: translateX(0);
+            }
+
+            .text-effect:nth-of-type(1)::before,
+            .text-effect:nth-of-type(1)::after {
+                animation-delay: 1s;
+            }
+
+            @keyframes a-ltr-after {
+                0% {
+                    transform: translateX(-100%)
+                }
+
+                100% {
+                    transform: translateX(101%)
+                }
+            }
+
+            @keyframes a-ltr-before {
+                0% {
+                    transform: translateX(0)
+                }
+
+                100% {
+                    transform: translateX(200%)
+                }
+            }
+
+            .form__group {
+                position: relative;
+                padding: 15px 0 0;
+                width: 100%;
+            }
+
+            .form__field {
+                font-family: inherit;
+                width: 200px;
+                border: 0;
+                border-bottom: 2px solid #9b9b9b;
+                outline: 0;
+                font-size: 1.3rem;
+                padding: 7px 0;
+                background: transparent;
+                transition: border-color 0.2s;
+            }
+
+            .form__field::placeholder {
+                color: transparent;
+            }
+
+            .form__field:placeholder-shown~.form__label {
+                font-size: 1.3rem;
+                cursor: text;
+                top: 20px;
+            }
+
+            .form__label {
+                position: absolute;
+                top: 0;
+                display: block;
+                transition: 0.2s;
+                font-size: 1rem;
+                color: #9b9b9b;
+            }
+
+            .form__field:focus {
+                padding-bottom: 6px;
+                font-weight: 700;
+                border-width: 3px;
+                border-image: linear-gradient(to right, #11998e, #38ef7d);
+                border-image-slice: 1;
+            }
+
+            .form__field:focus~.form__label {
+                position: absolute;
+                top: 0;
+                display: block;
+                transition: 0.2s;
+                font-size: 1rem;
+                color: #11998e;
+                font-weight: 700;
+            }
+
+            /* reset input */
+            .form__field:required,
+            .form__field:invalid {
+                box-shadow: none;
+            }
+
+            select {
+
+                /* styling */
+                background-color: white;
+                border: thin solid blue;
+                border-radius: 4px;
+                display: inline-block;
+                font: inherit;
+                line-height: 1.5em;
+                padding: 0.5em 3.5em 0.5em 1em;
+
+                /* reset */
+
+                margin: 0;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+            }
+
+            select.minimal {
+                background-image:
+                    linear-gradient(45deg, transparent 50%, gray 50%),
+                    linear-gradient(135deg, gray 50%, transparent 50%),
+                    linear-gradient(to right, #ccc, #ccc);
+                background-position:
+                    calc(100% - 20px) calc(1em + 2px),
+                    calc(100% - 15px) calc(1em + 2px),
+                    calc(100% - 2.5em) 0.5em;
+                background-size:
+                    5px 5px,
+                    5px 5px,
+                    1px 1.5em;
+                background-repeat: no-repeat;
+            }
+
+            select.minimal:focus {
+                background-image:
+                    linear-gradient(45deg, green 50%, transparent 50%),
+                    linear-gradient(135deg, transparent 50%, green 50%),
+                    linear-gradient(to right, #ccc, #ccc);
+                background-position:
+                    calc(100% - 15px) 1em,
+                    calc(100% - 20px) 1em,
+                    calc(100% - 2.5em) 0.5em;
+                background-size:
+                    5px 5px,
+                    5px 5px,
+                    1px 1.5em;
+                background-repeat: no-repeat;
+                border-color: green;
+                outline: 0;
+            }
+
+
+            select:-moz-focusring {
+                color: transparent;
+                text-shadow: 0 0 0 #000;
+            }
+
+            body {
+                font-family: 'Philosopher', sans-serif;
+            }
+
+            .text-center {
+                text-align: center;
+            }
+
+            .side-lines {
+                display: block;
+                position: relative;
+            }
+
+            .side-lines * {
+                background-color: white;
+                position: relative;
+            }
+
+            .side-lines::before {
+                content: '';
+                width: 100%;
+                height: 1px;
+                display: block;
+                background-color: lime;
+                position: absolute;
+                top: 45%;
+            }
+
             .languages {
                 display: flex;
             }
+
             .languages__to,
             .languages__from {
                 margin: 0 5px;
             }
+
+            .register-text {
+                font-size: 16px;
+            }
         </style>
     </head>
+
     <body>
+        <div class="text-center">
+            <div class="side-lines">
+                <img src="./icon.png" alt="">
+            </div>
+        </div>
         <div id="authorized">
             <h3>Language translate:</h3>
             <div class="languages">
                 <div class="languages__from">
                     <div class="languages__title">From</div>
-                    <select id="language-select-text-lang">
+                    <select id="language-select-text-lang" class="minimal">
                         <option value="ru" selected>Russian</option>
                         <option value="zh">Chinese</option>
-                        <option value="en">English</option>
+                        <option value="en" disabled>English</option>
                         <option value="de">German</option>
                         <option value="be">Belarusian</option>
                         <option value="fr">French</option>
@@ -34,8 +253,8 @@
                 </div>
                 <div class="languages__to">
                     <div class="languages__title">To</div>
-                    <select id="language-select-translate-lang">
-                        <option value="ru">Russian</option>
+                    <select id="language-select-translate-lang" class="minimal">
+                        <option value="ru" disabled>Russian</option>
                         <option value="zh">Chinese</option>
                         <option value="en" selected>English</option>
                         <option value="de">German</option>
@@ -48,14 +267,18 @@
             </div>
         </div>
         <div id="unauthorized">
-            <p>
+            <p class="text-effect register-text">
                 Register
                 <a href="https://e-translate.herokuapp.com">here</a> and input
                 your email
             </p>
-            <input id="email" type="password" placeholder="Input your email" />
+            <div class="form__group field">
+                <input id="email" type="password" class="form__field" placeholder="Email" required />
+                <label for="name" class="form__label">Email</label>
+            </div>
         </div>
         <script src="constants.js"></script>
         <script src="popup.js" type="module"></script>
     </body>
+
 </html>

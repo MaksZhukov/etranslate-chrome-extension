@@ -26,9 +26,23 @@ chrome.storage.sync.get(['etranslateExtensionKey'], function ({
 
     selectTextlang.addEventListener('change', ({ target }) => {
         chrome.storage.sync.set({ ['textLang']: target.value });
+        Array.from(selectTranslateLang.options).forEach((item) => {
+            if (item.value === target.value) {
+                item.setAttribute('disabled', 'true');
+            } else {
+                item.removeAttribute('disabled');
+            }
+        });
     });
     selectTranslateLang.addEventListener('change', ({ target }) => {
         chrome.storage.sync.set({ ['translateLang']: target.value });
+        Array.from(selectTextlang.options).forEach((item) => {
+            if (item.value === target.value) {
+                item.setAttribute('disabled', 'true');
+            } else {
+                item.removeAttribute('disabled');
+            }
+        });
     });
 
     if (etranslateExtensionKey) {
