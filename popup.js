@@ -1,7 +1,6 @@
 const setDisabledValue = (options, value) => {
     Array.from(options).forEach((item) => {
         if (item.value === value) {
-            console.log(value);
             item.setAttribute("disabled", "true");
         } else {
             item.removeAttribute("disabled");
@@ -23,6 +22,8 @@ chrome.storage.sync.get(["etranslateExtensionKey"], function ({
         let selectTranslateLangValue = selectTranslateLang.value;
         selectTextlang.value = selectTranslateLangValue;
         selectTranslateLang.value = selectTextlangValue;
+        chrome.storage.sync.set({ ["translateLang"]: selectTextlangValue });
+        chrome.storage.sync.set({ ["textLang"]: selectTranslateLangValue });
         setDisabledValue(selectTextlang.options, selectTextlangValue);
         setDisabledValue(selectTranslateLang.options, selectTranslateLangValue);
     });
@@ -33,11 +34,13 @@ chrome.storage.sync.get(["etranslateExtensionKey"], function ({
     }) {
         if (textLang) {
             selectTextlang.value = textLang;
+            setDisabledValue(selectTextlang.options, translateLang);
         } else {
             chrome.storage.sync.set({ ["textLang"]: selectTextlang.value });
         }
         if (translateLang) {
             selectTranslateLang.value = translateLang;
+            setDisabledValue(selectTranslateLang.options, textLang);
         } else {
             chrome.storage.sync.set({
                 ["translateLang"]: selectTranslateLang.value,
