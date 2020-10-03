@@ -1,4 +1,4 @@
-let toolTipRef = document.createElement('div');
+let toolTipRef = document.createElement("div");
 let x, y;
 let tt;
 let selectionStr;
@@ -6,7 +6,7 @@ let selectionStr;
 let textLang, translateLang, etranslateExtensionKey;
 
 chrome.storage.sync.get(
-    ['textLang', 'translateLang', 'etranslateExtensionKey'],
+    ["textLang", "translateLang", "etranslateExtensionKey"],
     function (result) {
         textLang = result.textLang;
         translateLang = result.translateLang;
@@ -21,17 +21,17 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
         : translateLang;
 });
 
-toolTipRef.setAttribute('id', 'etranslate-tooltip');
+toolTipRef.setAttribute("id", "etranslate-tooltip");
 document.body.append(toolTipRef);
 
-document.addEventListener('mouseup', function (e) {
+document.addEventListener("mouseup", function (e) {
     setTimeout(() => {
         if (selectionStr) {
             x = e.clientX + window.scrollX;
             y = e.clientY + window.scrollY - 25;
-            toolTipRef.setAttribute('style', `left: ${x}px; top: ${y}px`);
-            let arrStr = selectionStr.split(' ');
-            if (arrStr.length < 11 && arrStr[0] !== '') {
+            toolTipRef.setAttribute("style", `left: ${x}px; top: ${y}px`);
+            let arrStr = selectionStr.split(" ");
+            if (arrStr.length < 11 && arrStr[0] !== "") {
                 if (tt && !tt.popperInstance.popper.contains(e.target)) {
                     tt.dispose();
                     tt = null;
@@ -43,7 +43,7 @@ document.addEventListener('mouseup', function (e) {
                         .then((res) => res.json())
                         .then((text) => {
                             tt = new Tooltip(toolTipRef, {
-                                placement: 'top',
+                                placement: "top",
                                 title: text,
                             }).show();
                         });
@@ -56,6 +56,6 @@ document.addEventListener('mouseup', function (e) {
     }, 0);
 });
 
-document.addEventListener('selectionchange', () => {
+document.addEventListener("selectionchange", () => {
     selectionStr = window.getSelection().toString();
 });
