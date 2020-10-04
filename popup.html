@@ -1,340 +1,480 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Etranslate</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Philosopher&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            .text-effect {
+                position: relative;
+                overflow: hidden;
+                display: block;
+                line-height: 1.2;
+            }
 
-<head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-	<title>Etranslate</title>
-	<link href="https://fonts.googleapis.com/css2?family=Philosopher&display=swap" rel="stylesheet">
-	<style>
-		.text-effect {
-			position: relative;
-			overflow: hidden;
-			display: block;
-			line-height: 1.2;
-		}
+            .text-effect::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                background: white;
+                animation: a-ltr-after 2s cubic-bezier(0.77, 0, 0.18, 1)
+                    forwards;
+                transform: translateX(-101%);
+            }
 
-		.text-effect::after {
-			content: '';
-			position: absolute;
-			top: 0;
-			right: 0;
-			width: 100%;
-			height: 100%;
-			background: white;
-			animation: a-ltr-after 2s cubic-bezier(.77, 0, .18, 1) forwards;
-			transform: translateX(-101%);
-		}
+            .text-effect::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                background: var(--bg-color);
+                animation: a-ltr-before 2s cubic-bezier(0.77, 0, 0.18, 1)
+                    forwards;
+                transform: translateX(0);
+            }
 
-		.text-effect::before {
-			content: '';
-			position: absolute;
-			top: 0;
-			right: 0;
-			width: 100%;
-			height: 100%;
-			background: var(--bg-color);
-			animation: a-ltr-before 2s cubic-bezier(.77, 0, .18, 1) forwards;
-			transform: translateX(0);
-		}
+            .text-effect:nth-of-type(1)::before,
+            .text-effect:nth-of-type(1)::after {
+                animation-delay: 1s;
+            }
 
-		.text-effect:nth-of-type(1)::before,
-		.text-effect:nth-of-type(1)::after {
-			animation-delay: 1s;
-		}
+            @keyframes a-ltr-after {
+                0% {
+                    transform: translateX(-100%);
+                }
 
-		@keyframes a-ltr-after {
-			0% {
-				transform: translateX(-100%)
-			}
+                100% {
+                    transform: translateX(101%);
+                }
+            }
 
-			100% {
-				transform: translateX(101%)
-			}
-		}
+            @keyframes a-ltr-before {
+                0% {
+                    transform: translateX(0);
+                }
 
-		@keyframes a-ltr-before {
-			0% {
-				transform: translateX(0)
-			}
+                100% {
+                    transform: translateX(200%);
+                }
+            }
 
-			100% {
-				transform: translateX(200%)
-			}
-		}
+            .form__group {
+                position: relative;
+                padding: 15px 0 0;
+                width: 100%;
+            }
 
-		.form__group {
-			position: relative;
-			padding: 15px 0 0;
-			width: 100%;
-		}
+            .form__field {
+                font-family: inherit;
+                width: 200px;
+                border: 0;
+                border-bottom: 2px solid #9b9b9b;
+                outline: 0;
+                font-size: 1.3rem;
+                padding: 7px 0;
+                background: transparent;
+                transition: border-color 0.2s;
+            }
 
-		.form__field {
-			font-family: inherit;
-			width: 200px;
-			border: 0;
-			border-bottom: 2px solid #9b9b9b;
-			outline: 0;
-			font-size: 1.3rem;
-			padding: 7px 0;
-			background: transparent;
-			transition: border-color 0.2s;
-		}
+            .form__field::placeholder {
+                color: transparent;
+            }
 
-		.form__field::placeholder {
-			color: transparent;
-		}
+            .form__field:placeholder-shown ~ .form__label {
+                font-size: 1.3rem;
+                cursor: text;
+                top: 20px;
+            }
 
-		.form__field:placeholder-shown~.form__label {
-			font-size: 1.3rem;
-			cursor: text;
-			top: 20px;
-		}
+            .form__label {
+                position: absolute;
+                top: 0;
+                display: block;
+                transition: 0.2s;
+                font-size: 1rem;
+                color: #9b9b9b;
+            }
 
-		.form__label {
-			position: absolute;
-			top: 0;
-			display: block;
-			transition: 0.2s;
-			font-size: 1rem;
-			color: #9b9b9b;
-		}
+            .form__field:focus {
+                padding-bottom: 6px;
+                font-weight: 700;
+                border-width: 3px;
+                border-image: linear-gradient(to right, #11998e, #38ef7d);
+                border-image-slice: 1;
+            }
 
-		.form__field:focus {
-			padding-bottom: 6px;
-			font-weight: 700;
-			border-width: 3px;
-			border-image: linear-gradient(to right, #11998e, #38ef7d);
-			border-image-slice: 1;
-		}
+            .form__field:focus ~ .form__label {
+                position: absolute;
+                top: 0;
+                display: block;
+                transition: 0.2s;
+                font-size: 1rem;
+                color: #11998e;
+                font-weight: 700;
+            }
 
-		.form__field:focus~.form__label {
-			position: absolute;
-			top: 0;
-			display: block;
-			transition: 0.2s;
-			font-size: 1rem;
-			color: #11998e;
-			font-weight: 700;
-		}
+            /* reset input */
+            .form__field:required,
+            .form__field:invalid {
+                box-shadow: none;
+            }
 
-		/* reset input */
-		.form__field:required,
-		.form__field:invalid {
-			box-shadow: none;
-		}
+            .dropdown {
+                display: inline-block;
+                position: relative;
+                overflow: hidden;
+                height: 28px;
+                width: 100px;
+                background: #f2f2f2;
+                border: 1px solid;
+                border-color: white #f7f7f7 whitesmoke;
+                border-radius: 3px;
+                background-image: -webkit-linear-gradient(
+                    top,
+                    transparent,
+                    rgba(0, 0, 0, 0.06)
+                );
+                background-image: -moz-linear-gradient(
+                    top,
+                    transparent,
+                    rgba(0, 0, 0, 0.06)
+                );
+                background-image: -o-linear-gradient(
+                    top,
+                    transparent,
+                    rgba(0, 0, 0, 0.06)
+                );
+                background-image: linear-gradient(
+                    to bottom,
+                    transparent,
+                    rgba(0, 0, 0, 0.06)
+                );
+                -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+            }
 
-		.dropdown {
-			display: inline-block;
-			position: relative;
-			overflow: hidden;
-			height: 28px;
-			width: 100px;
-			background: #f2f2f2;
-			border: 1px solid;
-			border-color: white #f7f7f7 whitesmoke;
-			border-radius: 3px;
-			background-image: -webkit-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
-			background-image: -moz-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
-			background-image: -o-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
-			background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.06));
-			-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
-			box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
-		}
+            .dropdown:before,
+            .dropdown:after {
+                content: '';
+                position: absolute;
+                z-index: 2;
+                top: 9px;
+                right: 10px;
+                width: 0;
+                height: 0;
+                border: 4px dashed;
+                border-color: #888888 transparent;
+                pointer-events: none;
+            }
 
-		.dropdown:before,
-		.dropdown:after {
-			content: '';
-			position: absolute;
-			z-index: 2;
-			top: 9px;
-			right: 10px;
-			width: 0;
-			height: 0;
-			border: 4px dashed;
-			border-color: #888888 transparent;
-			pointer-events: none;
-		}
+            .dropdown:before {
+                border-bottom-style: solid;
+                border-top: none;
+            }
 
-		.dropdown:before {
-			border-bottom-style: solid;
-			border-top: none;
-		}
+            .dropdown:after {
+                margin-top: 7px;
+                border-top-style: solid;
+                border-bottom: none;
+            }
 
-		.dropdown:after {
-			margin-top: 7px;
-			border-top-style: solid;
-			border-bottom: none;
-		}
+            .dropdown-select {
+                position: relative;
+                width: 130%;
+                margin: 0;
+                padding: 6px 8px 6px 10px;
+                height: 28px;
+                line-height: 14px;
+                font-size: 12px;
+                color: #62717a;
+                text-shadow: 0 1px white;
+                background: #f2f2f2;
+                /* Fallback for IE 8 */
+                background: rgba(0, 0, 0, 0) !important;
+                /* "transparent" doesn't work with Opera */
+                border: 0;
+                border-radius: 0;
+                -webkit-appearance: none;
+            }
 
-		.dropdown-select {
-			position: relative;
-			width: 130%;
-			margin: 0;
-			padding: 6px 8px 6px 10px;
-			height: 28px;
-			line-height: 14px;
-			font-size: 12px;
-			color: #62717a;
-			text-shadow: 0 1px white;
-			background: #f2f2f2;
-			/* Fallback for IE 8 */
-			background: rgba(0, 0, 0, 0) !important;
-			/* "transparent" doesn't work with Opera */
-			border: 0;
-			border-radius: 0;
-			-webkit-appearance: none;
-		}
+            .dropdown-select:focus {
+                z-index: 3;
+                width: 100%;
+                color: #394349;
+                outline: 2px solid #49aff2;
+                outline: 2px solid -webkit-focus-ring-color;
+                outline-offset: -2px;
+            }
 
-		.dropdown-select:focus {
-			z-index: 3;
-			width: 100%;
-			color: #394349;
-			outline: 2px solid #49aff2;
-			outline: 2px solid -webkit-focus-ring-color;
-			outline-offset: -2px;
-		}
+            .dropdown-select > option {
+                margin: 3px;
+                padding: 6px 8px;
+                text-shadow: none;
+                background: #f2f2f2;
+                border-radius: 3px;
+                cursor: pointer;
+            }
 
-		.dropdown-select>option {
-			margin: 3px;
-			padding: 6px 8px;
-			text-shadow: none;
-			background: #f2f2f2;
-			border-radius: 3px;
-			cursor: pointer;
-		}
+            /* Fix for IE 8 putting the arrows behind the select element. */
 
-		/* Fix for IE 8 putting the arrows behind the select element. */
+            .lt-ie9 .dropdown {
+                z-index: 1;
+            }
 
-		.lt-ie9 .dropdown {
-			z-index: 1;
-		}
+            .lt-ie9 .dropdown-select {
+                z-index: -1;
+            }
 
-		.lt-ie9 .dropdown-select {
-			z-index: -1;
-		}
+            .lt-ie9 .dropdown-select:focus {
+                z-index: 3;
+            }
 
-		.lt-ie9 .dropdown-select:focus {
-			z-index: 3;
-		}
+            /* Dirty fix for Firefox adding padding where it shouldn't. */
 
-		/* Dirty fix for Firefox adding padding where it shouldn't. */
+            @-moz-document url-prefix() {
+                .dropdown-select {
+                    padding-left: 6px;
+                }
+            }
+            .tgl {
+                display: none;
+            }
+            .tgl,
+            .tgl:after,
+            .tgl:before,
+            .tgl *,
+            .tgl *:after,
+            .tgl *:before,
+            .tgl + .tgl-btn {
+                box-sizing: border-box;
+            }
+            .tgl::selection,
+            .tgl:after::selection,
+            .tgl:before::selection,
+            .tgl *::selection,
+            .tgl *:after::selection,
+            .tgl *:before::selection,
+            .tgl + .tgl-btn::selection {
+                background: none;
+            }
+            .tgl + .tgl-btn {
+                outline: 0;
+                display: block;
+                width: 4em;
+                height: 2em;
+                position: relative;
+                cursor: pointer;
+                user-select: none;
+            }
+            .tgl + .tgl-btn:after,
+            .tgl + .tgl-btn:before {
+                position: relative;
+                display: block;
+                content: '';
+                width: 50%;
+                height: 100%;
+            }
+            .tgl + .tgl-btn:after {
+                left: 0;
+            }
+            .tgl + .tgl-btn:before {
+                display: none;
+            }
+            .tgl:checked + .tgl-btn:after {
+                left: 50%;
+            }
+            .tgl-skewed + .tgl-btn {
+                overflow: hidden;
+                transform: skew(-10deg);
+                backface-visibility: hidden;
+                transition: all 0.2s ease;
+                font-family: sans-serif;
+                background: #888;
+            }
+            .tgl-skewed + .tgl-btn:after,
+            .tgl-skewed + .tgl-btn:before {
+                transform: skew(10deg);
+                display: inline-block;
+                transition: all 0.2s ease;
+                width: 100%;
+                text-align: center;
+                position: absolute;
+                line-height: 2em;
+                font-weight: bold;
+                color: #fff;
+                text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+            }
+            .tgl-skewed + .tgl-btn:after {
+                left: 100%;
+                content: attr(data-tg-on);
+            }
+            .tgl-skewed + .tgl-btn:before {
+                left: 0;
+                content: attr(data-tg-off);
+            }
+            .tgl-skewed + .tgl-btn:active {
+                background: #888;
+            }
+            .tgl-skewed + .tgl-btn:active:before {
+                left: -10%;
+            }
+            .tgl-skewed:checked + .tgl-btn {
+                background: #86d993;
+            }
+            .tgl-skewed:checked + .tgl-btn:before {
+                left: -100%;
+            }
+            .tgl-skewed:checked + .tgl-btn:after {
+                left: 0;
+            }
+            .tgl-skewed:checked + .tgl-btn:active:after {
+                left: 10%;
+            }
 
-		@-moz-document url-prefix() {
-			.dropdown-select {
-				padding-left: 6px;
-			}
-		}
+            body {
+                font-family: 'Philosopher', sans-serif;
+            }
 
+            .text-center {
+                text-align: center;
+            }
+            .block-center {
+                margin: auto;
+            }
 
-		body {
-			font-family: 'Philosopher', sans-serif;
-		}
+            .side-lines {
+                display: block;
+                position: relative;
+            }
 
-		.text-center {
-			text-align: center;
-		}
+            .side-lines * {
+                background-color: white;
+                position: relative;
+            }
 
-		.side-lines {
-			display: block;
-			position: relative;
-		}
+            .side-lines::before {
+                content: '';
+                width: 100%;
+                height: 1px;
+                display: block;
+                background-color: lime;
+                position: absolute;
+                top: 45%;
+            }
 
-		.side-lines * {
-			background-color: white;
-			position: relative;
-		}
+            .languages {
+                display: flex;
+                align-items: flex-end;
+            }
 
-		.side-lines::before {
-			content: '';
-			width: 100%;
-			height: 1px;
-			display: block;
-			background-color: lime;
-			position: absolute;
-			top: 45%;
-		}
+            .languages__to,
+            .languages__from {
+                margin: 0 5px;
+            }
 
-		.languages {
-			display: flex;
-			align-items: flex-end;
-		}
+            .register-text {
+                font-size: 16px;
+            }
 
-		.languages__to,
-		.languages__from {
-			margin: 0 5px;
-		}
+            .reverse-language-btn {
+                width: 23px;
+            }
+        </style>
+    </head>
 
-		.register-text {
-			font-size: 16px;
-		}
-
-		.reverse-language-btn {
-			width: 23px;
-		}
-	</style>
-</head>
-
-<body>
-	<div class="text-center">
-		<div class="side-lines">
-			<img src="./icon.png" alt="">
-		</div>
-	</div>
-	<div id="authorized">
-		<h3>Language translate:</h3>
-		<div class="languages">
-			<div class="languages__from">
-				<div class="languages__title">From</div>
-				<div class="dropdown">
-					<select id="language-select-text-lang" class="dropdown-select">
-						<option value="ru" selected>Русский</option>
-						<option value="zh">Китайский</option>
-						<option value="en" disabled>Английский</option>
-						<option value="de">Германский</option>
-						<option value="fr">Французский</option>
-						<option value="da">Датский</option>
-						<option value="es">Испанский</option>
-						<option value="lv">Латвийский</option>
-						<option value="pl">Польский</option>
-					</select>
-				</div>
-			</div>
-			<div id="reverse-language-btn" class="reverse-language-btn">
-				<img src="reverse.svg" alt="reverse">
-			</div>
-			<div class="languages__to">
-				<div class="languages__title">To</div>
-				<div class="dropdown">
-					<select id="language-select-translate-lang" class="dropdown-select">
-						<option value="ru" disabled>Русский</option>
-						<option value="zh">Китайский</option>
-						<option value="en" selected>Английский</option>
-						<option value="de">Германский</option>
-						<option value="fr">Французский</option>
-						<option value="da">Датский</option>
-						<option value="es">Испанский</option>
-						<option value="lv">Латвийский</option>
-						<option value="pl">Польский</option>
-					</select>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div id="unauthorized">
-		<p class="text-effect register-text">
-			Register
-			<a href="https://e-translate.herokuapp.com">here</a> and input
-			your email
-		</p>
-		<div class="form__group field">
-			<input id="email" type="password" class="form__field" placeholder="Email" required />
-			<label for="name" class="form__label">Email</label>
-		</div>
-	</div>
-	<script src="constants.js"></script>
-	<script src="popup.js" type="module"></script>
-</body>
-
+    <body>
+        <div class="text-center">
+            <div class="side-lines">
+                <img src="./icon.png" alt="" />
+            </div>
+        </div>
+        <div id="authorized">
+            <div>
+                <input
+                    class="tgl tgl-skewed"
+                    id="active-translate-checkbox"
+                    type="checkbox"
+                />
+                <label
+                    class="tgl-btn block-center"
+                    data-tg-off="Выкл"
+                    data-tg-on="Вкл"
+                    for="active-translate-checkbox"
+                ></label>
+            </div>
+            <h3>Языки для перевода:</h3>
+            <div class="languages">
+                <div class="languages__from">
+                    <div class="languages__title">от</div>
+                    <div class="dropdown">
+                        <select
+                            id="language-select-text-lang"
+                            class="dropdown-select"
+                        >
+                            <option value="ru" selected>Русский</option>
+                            <option value="zh">Китайский</option>
+                            <option value="en" disabled>Английский</option>
+                            <option value="de">Германский</option>
+                            <option value="fr">Французский</option>
+                            <option value="da">Датский</option>
+                            <option value="es">Испанский</option>
+                            <option value="lv">Латвийский</option>
+                            <option value="pl">Польский</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="reverse-language-btn" class="reverse-language-btn">
+                    <img src="reverse.svg" alt="reverse" />
+                </div>
+                <div class="languages__to">
+                    <div class="languages__title">к</div>
+                    <div class="dropdown">
+                        <select
+                            id="language-select-translate-lang"
+                            class="dropdown-select"
+                        >
+                            <option value="ru" disabled>Русский</option>
+                            <option value="zh">Китайский</option>
+                            <option value="en" selected>Английский</option>
+                            <option value="de">Германский</option>
+                            <option value="fr">Французский</option>
+                            <option value="da">Датский</option>
+                            <option value="es">Испанский</option>
+                            <option value="lv">Латвийский</option>
+                            <option value="pl">Польский</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="unauthorized">
+            <p class="text-effect register-text">
+                Зарегистрируйтесь
+                <a href="https://e-translate.herokuapp.com">здесь</a> и введите
+                свой почту
+            </p>
+            <div class="form__group field">
+                <input
+                    id="email"
+                    type="password"
+                    class="form__field"
+                    placeholder="Email"
+                    required
+                />
+                <label for="name" class="form__label">Почта</label>
+            </div>
+        </div>
+        <script src="constants.js"></script>
+        <script src="popup.js" type="module"></script>
+    </body>
 </html>
