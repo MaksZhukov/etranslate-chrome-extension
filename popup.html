@@ -348,6 +348,9 @@
             .text-center {
                 text-align: center;
             }
+            .text-error {
+                color: red;
+            }
             .block-center {
                 margin: auto;
             }
@@ -459,9 +462,9 @@
         </div>
         <div id="unauthorized">
             <p class="text-effect register-text">
-                Зарегистрируйтесь
-                <a href="https://e-translate.herokuapp.com">здесь</a> и введите
-                свой почту
+                Зарегистрируйтесь на
+                <a href="https://e-translate.herokuapp.com">сайте</a> или в
+                <a href="#">мобильном приложении</a> и введите свой почту
             </p>
             <div class="form__group field">
                 <input
@@ -472,6 +475,7 @@
                     required
                 />
                 <label for="name" class="form__label">Почта</label>
+                <div class="text-error"></div>
             </div>
         </div>
         <script src="constants.js"></script>

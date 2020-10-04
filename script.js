@@ -29,41 +29,35 @@ toolTipRef.setAttribute('id', 'etranslate-tooltip');
 document.body.append(toolTipRef);
 
 document.addEventListener('mouseup', function (e) {
-    console.log(activeTranslate);
-    if (activeTranslate) {
-        setTimeout(() => {
-            if (selectionStr) {
-                x = e.clientX + window.scrollX;
-                y = e.clientY + window.scrollY - 25;
-                toolTipRef.setAttribute('style', `left: ${x}px; top: ${y}px`);
-                let arrStr = selectionStr.split(' ');
-                if (arrStr.length < 11 && arrStr[0] !== '') {
-                    if (tt && !tt.popperInstance.popper.contains(e.target)) {
-                        tt.dispose();
-                        tt = null;
-                    }
-                    if (!tt) {
-                        fetch(
-                            `${window.APP_URL}/extension-translate?key=${etranslateExtensionKey}&textLang=${textLang}&translateLang=${translateLang}&text=${selectionStr}`
-                        )
-                            .then((res) => res.json())
-                            .then((text) => {
-                                tt = new Tooltip(toolTipRef, {
-                                    placement: 'top',
-                                    title: text,
-                                }).show();
-                            });
-                    }
+    setTimeout(() => {
+        if (selectionStr && activeTranslate) {
+            x = e.clientX + window.scrollX;
+            y = e.clientY + window.scrollY - 25;
+            toolTipRef.setAttribute('style', `left: ${x}px; top: ${y}px`);
+            let arrStr = selectionStr.split(' ');
+            if (arrStr.length < 11 && arrStr[0] !== '') {
+                if (tt && !tt.popperInstance.popper.contains(e.target)) {
+                    tt.dispose();
+                    tt = null;
                 }
-            } else if (
-                tt ||
-                (tt && tt.popperInstance.popper.contains(e.target))
-            ) {
-                tt.dispose();
-                tt = null;
+                if (!tt) {
+                    fetch(
+                        `${window.APP_URL}/extension-translate?key=${etranslateExtensionKey}&textLang=${textLang}&translateLang=${translateLang}&text=${selectionStr}`
+                    )
+                        .then((res) => res.json())
+                        .then((text) => {
+                            tt = new Tooltip(toolTipRef, {
+                                placement: 'top',
+                                title: text,
+                            }).show();
+                        });
+                }
             }
-        }, 0);
-    }
+        } else if (tt || (tt && tt.popperInstance.popper.contains(e.target))) {
+            tt.dispose();
+            tt = null;
+        }
+    }, 0);
 });
 
 document.addEventListener('selectionchange', () => {
