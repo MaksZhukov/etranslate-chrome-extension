@@ -50,6 +50,7 @@ document.addEventListener('mouseup', function (e) {
                                 placement: 'top',
                                 title: text,
                             }).show();
+                            tt._tooltipNode.setAttribute('style', 'opacity:1');
                         });
                 }
             }
