@@ -8,17 +8,10 @@ const setDisabledValue = (options, value) => {
     });
 };
 
-chrome.storage.sync.get(['etranslateExtensionKey'], function ({
-    etranslateExtensionKey,
-}) {
-    console.log(etranslateExtensionKey);
+chrome.storage.sync.get(['etranslateExtensionKey'], function ({ etranslateExtensionKey }) {
     let selectTextlang = document.getElementById('language-select-text-lang');
-    let selectTranslateLang = document.getElementById(
-        'language-select-translate-lang'
-    );
-    let activeTranslateCheckbox = document.getElementById(
-        'active-translate-checkbox'
-    );
+    let selectTranslateLang = document.getElementById('language-select-translate-lang');
+    let activeTranslateCheckbox = document.getElementById('active-translate-checkbox');
 
     let reverseLanguageBtn = document.querySelector('#reverse-language-btn');
     reverseLanguageBtn.addEventListener('click', () => {
@@ -92,16 +85,10 @@ chrome.storage.sync.get(['etranslateExtensionKey'], function ({
                             chrome.storage.sync.set({
                                 ['etranslateExtensionKey']: data.id,
                             });
-                            document.getElementById(
-                                'authorized'
-                            ).style.display = 'block';
-                            document.getElementById(
-                                'unauthorized'
-                            ).style.display = 'none';
+                            document.getElementById('authorized').style.display = 'block';
+                            document.getElementById('unauthorized').style.display = 'none';
                         } else {
-                            input.parentElement.querySelector(
-                                '.text-error'
-                            ).innerHTML = data.message;
+                            input.parentElement.querySelector('.text-error').innerHTML = data.message;
                         }
                     });
             }

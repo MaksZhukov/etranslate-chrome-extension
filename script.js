@@ -5,24 +5,20 @@ let selectionStr;
 
 let textLang, translateLang, activeTranslate, etranslateExtensionKey;
 
-chrome.storage.sync.get(
-    ['textLang', 'translateLang', 'etranslateExtensionKey', 'activeTranslate'],
-    function (result) {
-        textLang = result.textLang;
-        translateLang = result.translateLang;
-        etranslateExtensionKey = result.etranslateExtensionKey;
-        activeTranslate = result.activeTranslate;
-    }
-);
+chrome.storage.sync.get(['textLang', 'translateLang', 'etranslateExtensionKey', 'activeTranslate'], function (result) {
+    textLang = result.textLang;
+    translateLang = result.translateLang;
+    etranslateExtensionKey = result.etranslateExtensionKey;
+    activeTranslate = result.activeTranslate;
+});
 
 chrome.storage.onChanged.addListener(function (changes, namespace) {
     textLang = changes.textLang ? changes.textLang.newValue : textLang;
-    translateLang = changes.translateLang
-        ? changes.translateLang.newValue
-        : translateLang;
-    activeTranslate = changes.activeTranslate
-        ? changes.activeTranslate.newValue
-        : activeTranslate;
+    translateLang = changes.translateLang ? changes.translateLang.newValue : translateLang;
+    activeTranslate = changes.activeTranslate ? changes.activeTranslate.newValue : activeTranslate;
+    etranslateExtensionKey = changes.etranslateExtensionKey
+        ? changes.etranslateExtensionKey.newValue
+        : etranslateExtensionKey;
 });
 
 toolTipRef.setAttribute('id', 'etranslate-tooltip');
