@@ -143,3 +143,6 @@ p.bold {
     margin-left: 0;
     margin-right: 0;
 }
+.tooltip .tooltip-inner{
+	background-color: transparent;
+}
